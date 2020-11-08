@@ -154,23 +154,66 @@ Pain_norm %>% ggplot() +
 shapiro.test(Pain_norm$Score) # Shapiro test for normality 
 
 
+################# create histograms of differences 
 
+# Grip Strength histogram 
 
+TE <- read_excel('C:\\Users\\jacqu\\Documents\\minnesota\\stats\\Porth Phase 1 Results 2020-deidentified.xlsx', sheet = 'tennisElbow') #load excel sheet into R
 
+TE %>% ggplot(aes(x = gshist, y = ..count.., fill = POS)) + 
+  geom_histogram(binwidth = 9, 
+                 color = "white") +
+  scale_y_continuous(name="Frequency", #names the y-axis
+                     breaks = c(0:10), #adds tick marks for each value
+                     limit = c(0,10)) + #set the min and max values for y-axis
+  scale_x_continuous(name="Grip Strength Scores: Week 10 - baseline ") +
+  theme_bw() + 
+  theme(legend.title=element_blank()) +  #removes legend titles
+  theme(panel.border = element_blank(), 
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), 
+        axis.line = element_line(colour = "black")) + 
+  scale_fill_manual(values=c(Negative = "#FFD700", Positive = "#800000"))
 
+# UEFI Score histogram 
 
+TE <- read_excel('C:\\Users\\jacqu\\Documents\\minnesota\\stats\\Porth Phase 1 Results 2020-deidentified.xlsx', sheet = 'tennisElbow') #load excel sheet into R
 
+TE %>% ggplot(aes(x = gshist, y = ..count.., fill = POSUEFI)) + 
+  geom_histogram(binwidth = 12, 
+                 color = "white",
+                 position="dodge") +
+  scale_y_continuous(name="Frequency", #names the y-axis
+                     breaks = c(0:10), #adds tick marks for each value
+                     limit = c(0,7)) + #set the min and max values for y-axis
+  scale_x_continuous(name="UEFI Scores: Week 10 - baseline ") +
+  theme_bw() + 
+  theme(legend.title=element_blank()) +  #removes legend titles
+  theme(panel.border = element_blank(), 
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), 
+        axis.line = element_line(colour = "black")) + 
+  scale_fill_manual(values=c(Negative = "#FFD700", Positive = "#800000"))
 
+# Pain Score histogram 
 
+TE <- read_excel('C:\\Users\\jacqu\\Documents\\minnesota\\stats\\Porth Phase 1 Results 2020-deidentified.xlsx', sheet = 'tennisElbow') #load excel sheet into R
 
-
-
-####### create histograms of differences 
-
-
-
-
-
+TE %>% ggplot(aes(x = gshist, y = ..count.., fill = POSPAIN)) + 
+  geom_histogram(binwidth = 12, 
+                 color = "white",
+                 position="dodge") +
+  scale_y_continuous(name="Frequency", #names the y-axis
+                     breaks = c(0:10), #adds tick marks for each value
+                     limit = c(0,8)) + #set the min and max values for y-axis
+  scale_x_continuous(name="Pain Scores: Week 10 - baseline ") +
+  theme_bw() + 
+  theme(legend.title=element_blank()) +  #removes legend titles
+  theme(panel.border = element_blank(), 
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), 
+        axis.line = element_line(colour = "black")) + 
+  scale_fill_manual(values=c(Negative = "#FFD700", Positive = "#800000"))
 
 
 
