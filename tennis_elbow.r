@@ -11,10 +11,8 @@ library('ggthemes')
 TE <- read_excel('C:\\Users\\jacqu\\Documents\\minnesota\\stats\\Porth Phase 1 Results 2020-deidentified.xlsx', sheet = 'GripStrength') #load excel sheet into R
 
 
-# create a line graph, separated into the weeks, of the grip strength, pain, and UEIF scores to determine whether they are normally distributed
-
-################## TESTS FOR OUTLIERS
-################## BOXPLOTS 
+############################################### TESTS FOR OUTLIERS
+############################################### BOXPLOTS 
 
 
 # Boxplot of difference in GS
@@ -35,10 +33,16 @@ TE %>%
                alpha = 0.5, #transparent boxplot
                outlier.colour = "black", outlier.fill = "black", outlier.shape = 22, outlier.size = 2) + 
   geom_text(aes(label = outlier), na.rm = TRUE, hjust = -0.35) + 
-  ggtitle("Grip Strength: Week 10 - Baseline scores") + #labels title
-  theme(axis.title.x = element_blank()) +  #removes x-axis label
+#  ggtitle("Grip Strength: Week 10 - Baseline scores") + #labels title
+#  theme(axis.title.x = element_blank()) + #removes x-axis label
+ # theme(legend.title=element_blank()) +  #removes legend titles
   scale_x_discrete(name = element_blank()) +
-  theme_bw()
+  theme_bw() +
+  theme(panel.border = element_blank(), 
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), 
+        axis.line = element_line(colour = "black"))
+
 
 
 # Boxplot of difference in UEFI Scores
@@ -59,10 +63,14 @@ TE %>%
                alpha = 0.5, #transparent boxplot
                outlier.colour = "black", outlier.fill = "black", outlier.shape = 22, outlier.size = 2) + 
   geom_text(aes(label = outlier), na.rm = TRUE, hjust = -0.35) + 
-  ggtitle("UEFI Scores: Week 10 - Baseline scores") + #labels title
+#  ggtitle("UEFI Scores: Week 10 - Baseline scores") + #labels title
   theme(axis.title.x = element_blank()) +  #removes x-axis label
   scale_x_discrete(name = element_blank()) +
-  theme_bw()
+  theme_bw() +
+  theme(panel.border = element_blank(), 
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), 
+        axis.line = element_line(colour = "black"))
 
 
 # Boxplot of difference in Pain Scores
@@ -83,14 +91,20 @@ TE %>%
                alpha = 0.5, #transparent boxplot
                outlier.colour = "black", outlier.fill = "black", outlier.shape = 22, outlier.size = 2) + 
   geom_text(aes(label = outlier), na.rm = TRUE, hjust = -0.35) + 
-  ggtitle("Pain Scores: Week 10 - Baseline scores") + #labels title
+#  ggtitle("Pain Scores: Week 10 - Baseline scores") + #labels title
   theme(axis.title.x = element_blank()) +  #removes x-axis label
   scale_x_discrete(name = element_blank()) +
-  theme_bw()
-
+  theme_bw() +
+  theme(panel.border = element_blank(), 
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), 
+        axis.line = element_line(colour = "black"))
 
 
 #############################################################
+############################################################# LINE PLOTS
+
+
 # Non parametrics: Wilcoxon signed-rank test
 # line plot for normality 
 
@@ -104,7 +118,7 @@ GS_norm %>% ggplot() +
                fill = "#800000",
                alpha = 0.5) + 
   scale_x_continuous("Grip Strength Scores") +
-  ggtitle("Grip Strength differences") +
+ # ggtitle("Grip Strength differences") +
   theme_bw() +
   theme(panel.border = element_blank(), 
         panel.grid.major = element_blank(),
@@ -124,7 +138,7 @@ UEFI_norm %>% ggplot() +
                  fill = "#800000",
                  alpha = 0.5) + 
   scale_x_continuous("UEFI Scores") +
-  ggtitle("UEFI Score differences") +
+#  ggtitle("UEFI Score differences") +
   theme_bw() +
   theme(panel.border = element_blank(), 
         panel.grid.major = element_blank(),
@@ -144,7 +158,7 @@ Pain_norm %>% ggplot() +
                fill = "#800000",
                alpha = 0.5) + 
   scale_x_continuous("Pain Scores") +
-  ggtitle("Pain Score differences") +
+ # ggtitle("Pain Score differences") +
   theme_bw() +
   theme(panel.border = element_blank(), 
         panel.grid.major = element_blank(),
@@ -154,7 +168,11 @@ Pain_norm %>% ggplot() +
 shapiro.test(Pain_norm$Score) # Shapiro test for normality 
 
 
-################# create histograms of differences 
+
+#######################################################
+####################################################### HISTOGRAMS 
+
+
 
 # Grip Strength histogram 
 
@@ -217,18 +235,38 @@ TE %>% ggplot(aes(x = gshist, y = ..count.., fill = POSPAIN)) +
 
 
 
-############## correlations
+#####################################
+##################################### CORRELATIONS
+
+
 TE <- read_excel('C:\\Users\\jacqu\\Documents\\minnesota\\stats\\Porth Phase 1 Results 2020-deidentified.xlsx', sheet = 'tennisElbow') #load excel sheet into R
 
 # Baseline
 
-TE %>% ggplot() +
-  geom_point(aes(UEFI_Score0, GripStrength0)) +
-  geom_abline()
+TE %>% ggplot(aes(UEFI_Score0, GripStrength0)) +
+  geom_point(shape = 21) +
+  geom_smooth(method=lm, se = FALSE, color = "black") +
+  scale_x_continuous(name = "UEFI Scores") +
+  scale_y_continuous(name = "Grip Strength Scores") +
+  theme_bw() + 
+  theme(panel.border = element_blank(), 
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(), 
+    axis.line = element_line(colour = "black"))
 
 cor(TE$GripStrength0, TE$UEFI_Score0)
 
 # Week 10 
-TE %>% ggplot() +
-  geom_point(aes(Pain10, UEFI_Score10)) +
-  geom_abline()
+TE %>% ggplot(aes(Pain10, UEFI_Score10)) +
+  geom_point(shape = 21) +
+  geom_smooth(method=lm, se = FALSE, color = "black") +
+  scale_x_discrete(name = "Pain Scores",
+                   breaks = c(0:10),
+                   limit = c(0:10)) +
+  scale_y_continuous(name = "UEFI Scores") +
+  theme_bw() + 
+  theme(panel.border = element_blank(), 
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), 
+        axis.line = element_line(colour = "black"))
+
