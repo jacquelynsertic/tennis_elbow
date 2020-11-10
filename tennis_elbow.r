@@ -325,3 +325,62 @@ TE %>% ggplot(aes(x = Score, y = ..count.., fill = variable)) +
         panel.grid.minor = element_blank(), 
         axis.line = element_line(colour = "black")) +
   theme(legend.title=element_blank())  #removes legend titles
+
+
+
+##################################
+################################## pre to post boxplots 
+
+# Grip Strength 
+
+TE <- read_excel('C:\\Users\\jacqu\\Documents\\minnesota\\stats\\Porth Phase 1 Results 2020-deidentified.xlsx', sheet = 'GripStrength') 
+#load excel sheet into R
+
+TE %>% ggplot(aes(x = variable, y = Score)) + 
+  geom_boxplot(alpha = 0.5, 
+               color = "black", 
+               fill = c(Baseline = "#800000", Week10 = "#FFD700")) + #) +
+  scale_x_discrete(name = "Grip Strength Scores") +
+  scale_y_continuous(name = "Score") +
+  theme_bw() + 
+  theme(panel.border = element_blank(), 
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), 
+        axis.line = element_line(colour = "black")) +
+  theme(legend.title=element_blank())  #removes legend titles
+
+# UEFI Scores
+
+TE <- read_excel('C:\\Users\\jacqu\\Documents\\minnesota\\stats\\Porth Phase 1 Results 2020-deidentified.xlsx', sheet = 'UEFI') 
+#load excel sheet into R
+
+TE %>% ggplot(aes(x = variable, y = Score)) + 
+  geom_boxplot(alpha = 0.5, 
+               color = "black", 
+               fill = c(Baseline = "#800000", Week10 = "#FFD700")) + #) +
+  scale_x_discrete(name = "UEFI Scores") +
+  scale_y_continuous(name = "Score") +
+  theme_bw() + 
+  theme(panel.border = element_blank(), 
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), 
+        axis.line = element_line(colour = "black")) +
+  theme(legend.title=element_blank())  #removes legend titles
+
+# Pain Scores
+
+TE <- read_excel('C:\\Users\\jacqu\\Documents\\minnesota\\stats\\Porth Phase 1 Results 2020-deidentified.xlsx', sheet = 'Pain') 
+#load excel sheet into R
+
+TE %>% ggplot(aes(x = variable, y = Score)) + 
+  geom_boxplot(alpha = 0.5, 
+               color = "black", 
+               fill = c(Baseline = "#800000", Week10 = "#FFD700")) + #) +
+  scale_x_discrete(name = "Pain Scores") +
+  scale_y_continuous(name = "Score") +
+  theme_bw() + 
+  theme(panel.border = element_blank(), 
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), 
+        axis.line = element_line(colour = "black")) +
+  theme(legend.title=element_blank())  #removes legend titles
