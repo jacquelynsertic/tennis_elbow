@@ -270,3 +270,58 @@ TE %>% ggplot(aes(Pain10, UEFI_Score10)) +
         panel.grid.minor = element_blank(), 
         axis.line = element_line(colour = "black"))
 
+#####################################
+##################################### line plots of PRE AND POST
+
+# Grip Strength 
+
+TE <- read_excel('C:\\Users\\jacqu\\Documents\\minnesota\\stats\\Porth Phase 1 Results 2020-deidentified.xlsx', sheet = 'GripStrength') 
+#load excel sheet into R
+
+TE %>% ggplot(aes(x = Score, y = ..count.., fill = variable)) + 
+  geom_density(alpha = 0.5) +
+  scale_fill_manual(values = c(Baseline = "#800000", Week10 = "#FFD700")) + 
+  scale_x_continuous(name = "Grip Strength Scores") +
+  scale_y_continuous(name = "Frequency") +
+  theme_bw() + 
+  theme(panel.border = element_blank(), 
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), 
+        axis.line = element_line(colour = "black")) +
+  theme(legend.title=element_blank())  #removes legend titles
+
+# UEFI Scores
+
+TE <- read_excel('C:\\Users\\jacqu\\Documents\\minnesota\\stats\\Porth Phase 1 Results 2020-deidentified.xlsx', sheet = 'UEFI') 
+#load excel sheet into R
+
+TE %>% ggplot(aes(x = Score, y = ..count.., fill = variable)) + 
+  geom_density(alpha = 0.5) +
+  scale_fill_manual(values = c(Baseline = "#800000", Week10 = "#FFD700")) + 
+  scale_x_continuous(name = "UEFI Scores") +
+  scale_y_continuous(name = "Frequency") +
+  theme_bw() + 
+  theme(panel.border = element_blank(), 
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), 
+        axis.line = element_line(colour = "black")) +
+  theme(legend.title=element_blank())  #removes legend titles
+
+# Pain Scores
+
+TE <- read_excel('C:\\Users\\jacqu\\Documents\\minnesota\\stats\\Porth Phase 1 Results 2020-deidentified.xlsx', sheet = 'Pain') 
+#load excel sheet into R
+
+TE %>% ggplot(aes(x = Score, y = ..count.., fill = variable)) + 
+  geom_density(alpha = 0.5) +
+  scale_fill_manual(values = c(Baseline = "#800000", Week10 = "#FFD700")) + 
+  scale_x_discrete(name = "Pain Scores",
+                   breaks = c(0:10),
+                   limit = c(0:10)) +
+  scale_y_continuous(name = "Frequency") +
+  theme_bw() + 
+  theme(panel.border = element_blank(), 
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), 
+        axis.line = element_line(colour = "black")) +
+  theme(legend.title=element_blank())  #removes legend titles
