@@ -11,6 +11,81 @@ library('ggthemes')
 TE <- read_excel('C:\\Users\\jacqu\\Documents\\minnesota\\stats\\Porth Phase 1 Results 2020-deidentified.xlsx', sheet = 'GripStrength') #load excel sheet into R
 
 
+##############################################
+############################################## Preliminary Data Visualization
+
+TE <- read_excel('C:\\Users\\jacqu\\Documents\\minnesota\\stats\\Porth Phase 1 Results 2020-deidentified.xlsx', sheet = 'tennisElbow') #load excel sheet into R
+
+#Scatterplots
+
+#Grip Strength
+
+TE %>% ggplot(aes(GripStrength0, GripStrength10)) + 
+  geom_point() +
+  scale_x_continuous(name = "Baseline Scores (lbs)",
+                     limit = c(1,160)) + 
+  scale_y_continuous(name = "Week 10 Scores (lbs)",
+                     limit = c(1,160)) +
+  geom_abline(slope=1, intercept = 0) + # adds line of equality
+  theme_bw() +
+  theme(panel.border = element_blank(), 
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), 
+        axis.line = element_line(colour = "black"))
+
+#UEFI Score
+
+TE %>% ggplot(aes(UEFI_Score0, UEFI_Score10)) + 
+  geom_point() +
+  scale_x_continuous(name = "Baseline UEFI Scores",
+                     limit = c(1,80)) + 
+  scale_y_continuous(name = "Week 10 UEFI Scores",
+                     limit = c(1,80)) +
+  geom_abline(slope=1, intercept = 0) + # adds line of equality
+  theme_bw() +
+  theme(panel.border = element_blank(), 
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), 
+        axis.line = element_line(colour = "black"))
+  
+#Pain Scores
+
+TE %>% ggplot(aes(Pain0, Pain10)) + 
+  geom_point() +
+  scale_x_continuous(name = "Baseline Pain Scores",
+                     limit = c(1,10)) + 
+  scale_y_continuous(name = "Week 10 Pain Scores",
+                     limit = c(1,10)) +
+  geom_abline(slope=1, intercept = 0) + # adds line of equality
+  theme_bw() +
+  theme(panel.border = element_blank(), 
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), 
+        axis.line = element_line(colour = "black"))
+
+
+
+# Bar Graphs
+
+TE <- read_excel('C:\\Users\\jacqu\\Documents\\minnesota\\stats\\Porth Phase 1 Results 2020-deidentified.xlsx', sheet = 'GripStrength') #load excel sheet into R
+
+#Grip Strength
+
+TE %>% ggplot() + 
+  geom_bar(aes(x = Score)) +
+  scale_x_continuous(name = "Baseline Scores (lbs)",
+                     limit = c(1,160)) + 
+  scale_y_continuous(name = "Week 10 Scores (lbs)",
+                     limit = c(1,160)) +
+  geom_abline(slope=1, intercept = 0) + # adds line of equality
+  theme_bw() +
+  theme(panel.border = element_blank(), 
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), 
+        axis.line = element_line(colour = "black"))
+
+
+
 ############################################### TESTS FOR OUTLIERS
 ############################################### BOXPLOTS 
 
