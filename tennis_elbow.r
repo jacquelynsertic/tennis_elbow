@@ -281,7 +281,7 @@ TE <- read_excel('C:\\Users\\jacqu\\Documents\\minnesota\\stats\\Porth Phase 1 R
 TE %>% ggplot(aes(x = Score, y = ..count.., fill = variable)) + 
   geom_density(alpha = 0.5) +
   scale_fill_manual(values = c(Baseline = "#800000", Week10 = "#FFD700")) + 
-  scale_x_continuous(name = "Grip Strength Scores") +
+  scale_x_continuous(name = "Grip Strength Scores (lbs)") +
   scale_y_continuous(name = "Frequency") +
   theme_bw() + 
   theme(panel.border = element_blank(), 
@@ -340,8 +340,8 @@ TE %>% ggplot(aes(x = variable, y = Score)) +
   geom_boxplot(alpha = 0.5, 
                color = "black", 
                fill = c(Baseline = "#800000", Week10 = "#FFD700")) + #) +
-  scale_x_discrete(name = "Grip Strength Scores") +
-  scale_y_continuous(name = "Score") +
+  scale_x_discrete(name = "Grip Strength") +
+  scale_y_continuous(name = "Score (lbs)") +
   theme_bw() + 
   theme(panel.border = element_blank(), 
         panel.grid.major = element_blank(),
