@@ -16,15 +16,15 @@ TE <- read_excel('C:\\Users\\jacqu\\Documents\\minnesota\\stats\\Porth Phase 1 R
 
 TE <- read_excel('C:\\Users\\jacqu\\Documents\\minnesota\\stats\\Porth Phase 1 Results 2020-deidentified.xlsx', sheet = 'tennisElbow') #load excel sheet into R
 
-#Scatterplots
+####Scatterplots
 
 #Grip Strength
 
 TE %>% ggplot(aes(GripStrength0, GripStrength10)) + 
   geom_point() +
-  scale_x_continuous(name = "Baseline Scores (lbs)",
+  scale_x_continuous(name = "Grip Strength Baseline Scores (lbs)",
                      limit = c(1,160)) + 
-  scale_y_continuous(name = "Week 10 Scores (lbs)",
+  scale_y_continuous(name = "Grip Strength Week 10 Scores (lbs)",
                      limit = c(1,160)) +
   geom_abline(slope=1, intercept = 0) + # adds line of equality
   theme_bw() +
@@ -65,24 +65,27 @@ TE %>% ggplot(aes(Pain0, Pain10)) +
 
 
 
-# Bar Graphs
+#### Bar Graphs
 
 TE <- read_excel('C:\\Users\\jacqu\\Documents\\minnesota\\stats\\Porth Phase 1 Results 2020-deidentified.xlsx', sheet = 'GripStrength') #load excel sheet into R
 
 #Grip Strength
 
-TE %>% ggplot() + 
-  geom_bar(aes(x = Score)) +
-  scale_x_continuous(name = "Baseline Scores (lbs)",
-                     limit = c(1,160)) + 
+TE %>% ggplot(aes(x = variable, y = Score)) + 
+  geom_bar(stat = "identity") +
+  scale_x_discrete(name = "") + 
   scale_y_continuous(name = "Week 10 Scores (lbs)",
                      limit = c(1,160)) +
-  geom_abline(slope=1, intercept = 0) + # adds line of equality
   theme_bw() +
   theme(panel.border = element_blank(), 
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(), 
         axis.line = element_line(colour = "black"))
+
+
+
+
+
 
 
 
@@ -104,19 +107,19 @@ TE %>%
   ggplot(aes(x = GripStrength, y = Score, order = factor(GripStrength))) + #creates the ggplot
   geom_boxplot(aes(fill= GripStrength),
                width = .8, #adjusts spaces between boxplots
-               color = "#800000", fill = "#800000",
+               color = "black", fill = "#800000",
                alpha = 0.5, #transparent boxplot
                outlier.colour = "black", outlier.fill = "black", outlier.shape = 22, outlier.size = 2) + 
   geom_text(aes(label = outlier), na.rm = TRUE, hjust = -0.35) + 
-#  ggtitle("Grip Strength: Week 10 - Baseline scores") + #labels title
-#  theme(axis.title.x = element_blank()) + #removes x-axis label
- # theme(legend.title=element_blank()) +  #removes legend titles
-  scale_x_discrete(name = element_blank()) +
+  scale_y_continuous(name = "Grip Strength difference score (lbs)") +
+  #scale_x_discrete(name = "") +
   theme_bw() +
   theme(panel.border = element_blank(), 
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(), 
-        axis.line = element_line(colour = "black"))
+        axis.line = element_line(colour = "black")) +
+ # theme(axis.title.x = element_blank())  #removes x-axis label   ######### cannot figure out how to get rid of x axis label
+  
 
 
 
@@ -177,7 +180,7 @@ TE %>%
 
 
 #############################################################
-############################################################# LINE PLOTS
+############################################################# DENSITY - LINE PLOTS
 
 
 # Non parametrics: Wilcoxon signed-rank test
@@ -192,8 +195,8 @@ GS_norm %>% ggplot() +
                color = "#800000",
                fill = "#800000",
                alpha = 0.5) + 
-  scale_x_continuous("Grip Strength Scores") +
- # ggtitle("Grip Strength differences") +
+  scale_x_continuous(name = "Grip Strength Scores (lbs)",
+                     limit = c(0,100)) +
   theme_bw() +
   theme(panel.border = element_blank(), 
         panel.grid.major = element_blank(),
@@ -212,7 +215,9 @@ UEFI_norm %>% ggplot() +
                  color = "#800000",
                  fill = "#800000",
                  alpha = 0.5) + 
-  scale_x_continuous("UEFI Scores") +
+  scale_x_continuous("UEFI Scores", 
+                     limit = c(-35,85),
+                     breaks = c(-35, -20, -5, 10, 25, 40, 55, 70, 85)) +
 #  ggtitle("UEFI Score differences") +
   theme_bw() +
   theme(panel.border = element_blank(), 
@@ -232,7 +237,9 @@ Pain_norm %>% ggplot() +
                color = "#800000",
                fill = "#800000",
                alpha = 0.5) + 
-  scale_x_continuous("Pain Scores") +
+  scale_x_continuous("Pain Scores", 
+                     limit = c(-12,5),
+                     breaks = c(-12:5)) +
  # ggtitle("Pain Score differences") +
   theme_bw() +
   theme(panel.border = element_blank(), 
@@ -450,7 +457,7 @@ TE <- read_excel('C:\\Users\\jacqu\\Documents\\minnesota\\stats\\Porth Phase 1 R
 TE %>% ggplot(aes(x = variable, y = Score)) + 
   geom_boxplot(alpha = 0.5, 
                color = "black", 
-               fill = c(Baseline = "#800000", Week10 = "#FFD700")) + #) +
+               fill = c(Baseline = "#800000", Week10 = "#FFD700")) + 
   scale_x_discrete(name = "Pain Scores") +
   scale_y_continuous(name = "Score") +
   theme_bw() + 
