@@ -23,15 +23,18 @@ TE <- read_excel('C:\\Users\\jacqu\\Documents\\minnesota\\stats\\Porth Phase 1 R
 TE %>% ggplot(aes(GripStrength0, GripStrength10)) + 
   geom_point() +
   scale_x_continuous(name = "Grip Strength Baseline Scores (lbs)",
-                     limit = c(1,160)) + 
+                     limit = c(1,160),
+                     breaks = c(0, 40, 80, 120, 160)) + 
   scale_y_continuous(name = "Grip Strength Week 10 Scores (lbs)",
-                     limit = c(1,160)) +
+                     limit = c(1,160),
+                     breaks = c(0, 40, 80, 120, 160)) +
   geom_abline(slope=1, intercept = 0) + # adds line of equality
   theme_bw() +
   theme(panel.border = element_blank(), 
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(), 
-        axis.line = element_line(colour = "black"))
+        axis.line = element_line(colour = "black")) + 
+  annotate(geom="text",x=158,y=1,label="A")
 
 #UEFI Score
 
@@ -71,7 +74,7 @@ TE <- read_excel('C:\\Users\\jacqu\\Documents\\minnesota\\stats\\Porth Phase 1 R
 
 #Grip Strength
 
-TE %>% ggplot(aes(x = variable, y = Score)) + 
+TE %>% ggplot() + 
   geom_bar(stat = "identity") +
   scale_x_discrete(name = "") + 
   scale_y_continuous(name = "Week 10 Scores (lbs)",
@@ -84,9 +87,121 @@ TE %>% ggplot(aes(x = variable, y = Score)) +
 
 
 
+######### pre to post boxplots 
+
+# Grip Strength 
+
+TE <- read_excel('C:\\Users\\jacqu\\Documents\\minnesota\\stats\\Porth Phase 1 Results 2020-deidentified.xlsx', sheet = 'GripStrength') 
+#load excel sheet into R
+
+TE %>% ggplot(aes(x = variable, y = Score)) + 
+  geom_boxplot(alpha = 0.5, 
+               color = "black", 
+               fill = c(Baseline = "#800000", Week10 = "#FFD700")) + #) +
+  scale_x_discrete(name = "Grip Strength") +
+  scale_y_continuous(name = "Score (lbs)",
+                     breaks = c(0, 40, 80, 120, 160)) +
+  theme_bw() + 
+  theme(panel.border = element_blank(), 
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), 
+        axis.line = element_line(colour = "black")) +
+  theme(legend.title=element_blank()) + #removes legend titles
+  annotate(geom="text",x=2.5,y=10,label="B")
 
 
+# UEFI Scores
 
+TE <- read_excel('C:\\Users\\jacqu\\Documents\\minnesota\\stats\\Porth Phase 1 Results 2020-deidentified.xlsx', sheet = 'UEFI') 
+#load excel sheet into R
+
+TE %>% ggplot(aes(x = variable, y = Score)) + 
+  geom_boxplot(alpha = 0.5, 
+               color = "black", 
+               fill = c(Baseline = "#800000", Week10 = "#FFD700")) + #) +
+  scale_x_discrete(name = "UEFI Scores") +
+  scale_y_continuous(name = "Score") +
+  theme_bw() + 
+  theme(panel.border = element_blank(), 
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), 
+        axis.line = element_line(colour = "black")) +
+  theme(legend.title=element_blank())  #removes legend titles
+
+# Pain Scores
+
+TE <- read_excel('C:\\Users\\jacqu\\Documents\\minnesota\\stats\\Porth Phase 1 Results 2020-deidentified.xlsx', sheet = 'Pain') 
+#load excel sheet into R
+
+TE %>% ggplot(aes(x = variable, y = Score)) + 
+  geom_boxplot(alpha = 0.5, 
+               color = "black", 
+               fill = c(Baseline = "#800000", Week10 = "#FFD700")) + 
+  scale_x_discrete(name = "Pain Scores") +
+  scale_y_continuous(name = "Score") +
+  theme_bw() + 
+  theme(panel.border = element_blank(), 
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), 
+        axis.line = element_line(colour = "black")) +
+  theme(legend.title=element_blank())  #removes legend titles
+
+
+#####################################
+##################################### line plots of PRE AND POST
+
+# Grip Strength 
+
+TE <- read_excel('C:\\Users\\jacqu\\Documents\\minnesota\\stats\\Porth Phase 1 Results 2020-deidentified.xlsx', sheet = 'GripStrength') 
+#load excel sheet into R
+
+TE %>% ggplot(aes(x = Score, y = ..count.., fill = variable)) + 
+  geom_density(alpha = 0.5) +
+  scale_fill_manual(values = c(Baseline = "#800000", Week10 = "#FFD700")) + 
+  scale_x_continuous(name = "Grip Strength Scores (lbs)") +
+  scale_y_continuous(name = "Frequency") +
+  theme_bw() + 
+  theme(panel.border = element_blank(), 
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), 
+        axis.line = element_line(colour = "black")) +
+  theme(legend.title=element_blank())  #removes legend titles
+
+# UEFI Scores
+
+TE <- read_excel('C:\\Users\\jacqu\\Documents\\minnesota\\stats\\Porth Phase 1 Results 2020-deidentified.xlsx', sheet = 'UEFI') 
+#load excel sheet into R
+
+TE %>% ggplot(aes(x = Score, y = ..count.., fill = variable)) + 
+  geom_density(alpha = 0.5) +
+  scale_fill_manual(values = c(Baseline = "#800000", Week10 = "#FFD700")) + 
+  scale_x_continuous(name = "UEFI Scores") +
+  scale_y_continuous(name = "Frequency") +
+  theme_bw() + 
+  theme(panel.border = element_blank(), 
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), 
+        axis.line = element_line(colour = "black")) +
+  theme(legend.title=element_blank())  #removes legend titles
+
+# Pain Scores
+
+TE <- read_excel('C:\\Users\\jacqu\\Documents\\minnesota\\stats\\Porth Phase 1 Results 2020-deidentified.xlsx', sheet = 'Pain') 
+#load excel sheet into R
+
+TE %>% ggplot(aes(x = Score, y = ..count.., fill = variable)) + 
+  geom_density(alpha = 0.5) +
+  scale_fill_manual(values = c(Baseline = "#800000", Week10 = "#FFD700")) + 
+  scale_x_discrete(name = "Pain Scores",
+                   breaks = c(0:10),
+                   limit = c(0:10)) +
+  scale_y_continuous(name = "Frequency") +
+  theme_bw() + 
+  theme(panel.border = element_blank(), 
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), 
+        axis.line = element_line(colour = "black")) +
+  theme(legend.title=element_blank())  #removes legend titles
 
 
 ############################################### TESTS FOR OUTLIERS
@@ -329,14 +444,14 @@ TE %>% ggplot(aes(UEFI_Score0, GripStrength0)) +
   geom_point(shape = 21) +
   geom_smooth(method=lm, se = FALSE, color = "black") +
   scale_x_continuous(name = "UEFI Scores") +
-  scale_y_continuous(name = "Grip Strength Scores") +
+  scale_y_continuous(name = "Grip Strength Scores (lbs)") +
   theme_bw() + 
   theme(panel.border = element_blank(), 
     panel.grid.major = element_blank(),
     panel.grid.minor = element_blank(), 
-    axis.line = element_line(colour = "black"))
+    axis.line = element_line(colour = "black")) + 
+  annotate(geom="text",x=75,y=75,label=" r^2 = 0.293")
 
-cor(TE$GripStrength0, TE$UEFI_Score0)
 
 # Week 10 
 TE %>% ggplot(aes(Pain10, UEFI_Score10)) +
@@ -350,119 +465,11 @@ TE %>% ggplot(aes(Pain10, UEFI_Score10)) +
   theme(panel.border = element_blank(), 
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(), 
-        axis.line = element_line(colour = "black"))
-
-#####################################
-##################################### line plots of PRE AND POST
-
-# Grip Strength 
-
-TE <- read_excel('C:\\Users\\jacqu\\Documents\\minnesota\\stats\\Porth Phase 1 Results 2020-deidentified.xlsx', sheet = 'GripStrength') 
-#load excel sheet into R
-
-TE %>% ggplot(aes(x = Score, y = ..count.., fill = variable)) + 
-  geom_density(alpha = 0.5) +
-  scale_fill_manual(values = c(Baseline = "#800000", Week10 = "#FFD700")) + 
-  scale_x_continuous(name = "Grip Strength Scores (lbs)") +
-  scale_y_continuous(name = "Frequency") +
-  theme_bw() + 
-  theme(panel.border = element_blank(), 
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(), 
-        axis.line = element_line(colour = "black")) +
-  theme(legend.title=element_blank())  #removes legend titles
-
-# UEFI Scores
-
-TE <- read_excel('C:\\Users\\jacqu\\Documents\\minnesota\\stats\\Porth Phase 1 Results 2020-deidentified.xlsx', sheet = 'UEFI') 
-#load excel sheet into R
-
-TE %>% ggplot(aes(x = Score, y = ..count.., fill = variable)) + 
-  geom_density(alpha = 0.5) +
-  scale_fill_manual(values = c(Baseline = "#800000", Week10 = "#FFD700")) + 
-  scale_x_continuous(name = "UEFI Scores") +
-  scale_y_continuous(name = "Frequency") +
-  theme_bw() + 
-  theme(panel.border = element_blank(), 
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(), 
-        axis.line = element_line(colour = "black")) +
-  theme(legend.title=element_blank())  #removes legend titles
-
-# Pain Scores
-
-TE <- read_excel('C:\\Users\\jacqu\\Documents\\minnesota\\stats\\Porth Phase 1 Results 2020-deidentified.xlsx', sheet = 'Pain') 
-#load excel sheet into R
-
-TE %>% ggplot(aes(x = Score, y = ..count.., fill = variable)) + 
-  geom_density(alpha = 0.5) +
-  scale_fill_manual(values = c(Baseline = "#800000", Week10 = "#FFD700")) + 
-  scale_x_discrete(name = "Pain Scores",
-                   breaks = c(0:10),
-                   limit = c(0:10)) +
-  scale_y_continuous(name = "Frequency") +
-  theme_bw() + 
-  theme(panel.border = element_blank(), 
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(), 
-        axis.line = element_line(colour = "black")) +
-  theme(legend.title=element_blank())  #removes legend titles
+        axis.line = element_line(colour = "black")) + 
+  annotate(geom="text",x=7.5,y=70,label=" r^2 = 0.471")
 
 
 
-##################################
-################################## pre to post boxplots 
 
-# Grip Strength 
 
-TE <- read_excel('C:\\Users\\jacqu\\Documents\\minnesota\\stats\\Porth Phase 1 Results 2020-deidentified.xlsx', sheet = 'GripStrength') 
-#load excel sheet into R
 
-TE %>% ggplot(aes(x = variable, y = Score)) + 
-  geom_boxplot(alpha = 0.5, 
-               color = "black", 
-               fill = c(Baseline = "#800000", Week10 = "#FFD700")) + #) +
-  scale_x_discrete(name = "Grip Strength") +
-  scale_y_continuous(name = "Score (lbs)") +
-  theme_bw() + 
-  theme(panel.border = element_blank(), 
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(), 
-        axis.line = element_line(colour = "black")) +
-  theme(legend.title=element_blank())  #removes legend titles
-
-# UEFI Scores
-
-TE <- read_excel('C:\\Users\\jacqu\\Documents\\minnesota\\stats\\Porth Phase 1 Results 2020-deidentified.xlsx', sheet = 'UEFI') 
-#load excel sheet into R
-
-TE %>% ggplot(aes(x = variable, y = Score)) + 
-  geom_boxplot(alpha = 0.5, 
-               color = "black", 
-               fill = c(Baseline = "#800000", Week10 = "#FFD700")) + #) +
-  scale_x_discrete(name = "UEFI Scores") +
-  scale_y_continuous(name = "Score") +
-  theme_bw() + 
-  theme(panel.border = element_blank(), 
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(), 
-        axis.line = element_line(colour = "black")) +
-  theme(legend.title=element_blank())  #removes legend titles
-
-# Pain Scores
-
-TE <- read_excel('C:\\Users\\jacqu\\Documents\\minnesota\\stats\\Porth Phase 1 Results 2020-deidentified.xlsx', sheet = 'Pain') 
-#load excel sheet into R
-
-TE %>% ggplot(aes(x = variable, y = Score)) + 
-  geom_boxplot(alpha = 0.5, 
-               color = "black", 
-               fill = c(Baseline = "#800000", Week10 = "#FFD700")) + 
-  scale_x_discrete(name = "Pain Scores") +
-  scale_y_continuous(name = "Score") +
-  theme_bw() + 
-  theme(panel.border = element_blank(), 
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(), 
-        axis.line = element_line(colour = "black")) +
-  theme(legend.title=element_blank())  #removes legend titles
