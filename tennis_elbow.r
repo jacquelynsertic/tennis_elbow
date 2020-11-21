@@ -49,7 +49,8 @@ TE %>% ggplot(aes(UEFI_Score0, UEFI_Score10)) +
   theme(panel.border = element_blank(), 
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(), 
-        axis.line = element_line(colour = "black"))
+        axis.line = element_line(colour = "black"))+ 
+  annotate(geom="text",x=80,y=1,label="A")
   
 #Pain Scores
 
@@ -126,7 +127,8 @@ TE %>% ggplot(aes(x = variable, y = Score)) +
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(), 
         axis.line = element_line(colour = "black")) +
-  theme(legend.title=element_blank())  #removes legend titles
+  theme(legend.title=element_blank()) + #removes legend titles
+  annotate(geom="text",x=2.5,y=10,label="B")
 
 # Pain Scores
 
@@ -232,8 +234,8 @@ TE %>%
   theme(panel.border = element_blank(), 
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(), 
-        axis.line = element_line(colour = "black")) +
- # theme(axis.title.x = element_blank())  #removes x-axis label   ######### cannot figure out how to get rid of x axis label
+        axis.line = element_line(colour = "black")) 
+# theme(axis.title.x = element_blank())  #removes x-axis label   ######### cannot figure out how to get rid of x axis label
   
 
 
@@ -243,7 +245,7 @@ TE %>%
 TE <- read_excel('C:\\Users\\jacqu\\Documents\\minnesota\\stats\\Porth Phase 1 Results 2020-deidentified.xlsx', sheet = 'UEFI_diff') #load excel sheet into R
 
 is_outlier <- function(x) {
-  return(x < quantile(x, 0.25) - 1.5 * IQR(x) | x > quantile(x, 0.75) + 1.5 * IQR(x))
+  return(x < quantile(x, 0.25) - 2 * IQR(x) | x > quantile(x, 0.75) + 1.5 * IQR(x))
 }
 
 TE %>% 
@@ -252,13 +254,15 @@ TE %>%
   ggplot(aes(x = UEFI_Score, y = Score, order = factor(UEFI_Score))) + #creates the ggplot
   geom_boxplot(aes(fill= UEFI_Score),
                width = .8, #adjusts spaces between boxplots
-               color = "#800000", fill = "#800000",
+               color = "black", fill = "#800000",
                alpha = 0.5, #transparent boxplot
                outlier.colour = "black", outlier.fill = "black", outlier.shape = 22, outlier.size = 2) + 
   geom_text(aes(label = outlier), na.rm = TRUE, hjust = -0.35) + 
 #  ggtitle("UEFI Scores: Week 10 - Baseline scores") + #labels title
   theme(axis.title.x = element_blank()) +  #removes x-axis label
   scale_x_discrete(name = element_blank()) +
+  scale_y_continuous(limit = c(0,80),
+                     breaks = c(0,20,40,60,80)) +
   theme_bw() +
   theme(panel.border = element_blank(), 
         panel.grid.major = element_blank(),
@@ -280,13 +284,15 @@ TE %>%
   ggplot(aes(x = Pain_Score, y = Score, order = factor(Pain_Score))) + #creates the ggplot
   geom_boxplot(aes(fill= Pain_Score),
                width = .8, #adjusts spaces between boxplots
-               color = "#800000", fill = "#800000",
+               color = "black", fill = "#800000",
                alpha = 0.5, #transparent boxplot
                outlier.colour = "black", outlier.fill = "black", outlier.shape = 22, outlier.size = 2) + 
   geom_text(aes(label = outlier), na.rm = TRUE, hjust = -0.35) + 
 #  ggtitle("Pain Scores: Week 10 - Baseline scores") + #labels title
   theme(axis.title.x = element_blank()) +  #removes x-axis label
   scale_x_discrete(name = element_blank()) +
+  scale_y_continuous(limit = c(-10,10),
+                     breaks = c(-10:10)) +
   theme_bw() +
   theme(panel.border = element_blank(), 
         panel.grid.major = element_blank(),
