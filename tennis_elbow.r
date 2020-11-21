@@ -7,8 +7,16 @@ library('dplyr')
 library('dslabs')
 library('ggthemes')
 
+
+# TABLE OF CONTENTS
+
+
+
 #load the data into R from excel
 TE <- read_excel('C:\\Users\\jacqu\\Documents\\minnesota\\stats\\Porth Phase 1 Results 2020-deidentified.xlsx', sheet = 'GripStrength') #load excel sheet into R
+
+
+
 
 
 ##############################################
@@ -49,7 +57,7 @@ TE %>% ggplot(aes(UEFI_Score0, UEFI_Score10)) +
   theme(panel.border = element_blank(), 
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(), 
-        axis.line = element_line(colour = "black"))+ 
+        axis.line = element_line(colour = "black")) + 
   annotate(geom="text",x=80,y=1,label="A")
   
 #Pain Scores
@@ -65,7 +73,8 @@ TE %>% ggplot(aes(Pain0, Pain10)) +
   theme(panel.border = element_blank(), 
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(), 
-        axis.line = element_line(colour = "black"))
+        axis.line = element_line(colour = "black")) + 
+  annotate(geom="text",x=10,y=1,label="A")
 
 
 
@@ -146,8 +155,8 @@ TE %>% ggplot(aes(x = variable, y = Score)) +
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(), 
         axis.line = element_line(colour = "black")) +
-  theme(legend.title=element_blank())  #removes legend titles
-
+  theme(legend.title=element_blank()) + #removes legend titles
+  annotate(geom="text",x=2.5,y=1,label="B")
 
 #####################################
 ##################################### line plots of PRE AND POST
@@ -206,6 +215,7 @@ TE %>% ggplot(aes(x = Score, y = ..count.., fill = variable)) +
   theme(legend.title=element_blank())  #removes legend titles
 
 
+###############################################
 ############################################### TESTS FOR OUTLIERS
 ############################################### BOXPLOTS 
 
@@ -228,15 +238,16 @@ TE %>%
                alpha = 0.5, #transparent boxplot
                outlier.colour = "black", outlier.fill = "black", outlier.shape = 22, outlier.size = 2) + 
   geom_text(aes(label = outlier), na.rm = TRUE, hjust = -0.35) + 
-  scale_y_continuous(name = "Grip Strength difference score (lbs)") +
-  #scale_x_discrete(name = "") +
+  scale_y_continuous(name = "Difference in Grip Strength Scores (lbs): Week 10 - Baseline ") +
   theme_bw() +
   theme(panel.border = element_blank(), 
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(), 
-        axis.line = element_line(colour = "black")) 
-# theme(axis.title.x = element_blank())  #removes x-axis label   ######### cannot figure out how to get rid of x axis label
-  
+        axis.line = element_line(colour = "black")) +
+  theme(axis.text.x=element_blank(),
+        axis.ticks.x=element_blank()) +
+  scale_x_discrete(name = "Grip Strength")
+
 
 
 
@@ -258,16 +269,19 @@ TE %>%
                alpha = 0.5, #transparent boxplot
                outlier.colour = "black", outlier.fill = "black", outlier.shape = 22, outlier.size = 2) + 
   geom_text(aes(label = outlier), na.rm = TRUE, hjust = -0.35) + 
-#  ggtitle("UEFI Scores: Week 10 - Baseline scores") + #labels title
   theme(axis.title.x = element_blank()) +  #removes x-axis label
-  scale_x_discrete(name = element_blank()) +
-  scale_y_continuous(limit = c(0,80),
+  scale_y_continuous(name = "Difference in UEFI Scores (Week 10 - Baseline)",
+                     limit = c(0,80),
                      breaks = c(0,20,40,60,80)) +
   theme_bw() +
   theme(panel.border = element_blank(), 
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(), 
-        axis.line = element_line(colour = "black"))
+        axis.line = element_line(colour = "black")) +
+  theme(axis.text.x=element_blank(),
+        axis.ticks.x=element_blank()) +
+  scale_x_discrete(name = "UEFI Scores")
+
 
 
 # Boxplot of difference in Pain Scores
@@ -288,16 +302,17 @@ TE %>%
                alpha = 0.5, #transparent boxplot
                outlier.colour = "black", outlier.fill = "black", outlier.shape = 22, outlier.size = 2) + 
   geom_text(aes(label = outlier), na.rm = TRUE, hjust = -0.35) + 
-#  ggtitle("Pain Scores: Week 10 - Baseline scores") + #labels title
-  theme(axis.title.x = element_blank()) +  #removes x-axis label
-  scale_x_discrete(name = element_blank()) +
-  scale_y_continuous(limit = c(-10,10),
+  scale_y_continuous(name = "Difference in Pain Scores (Week 10 - Baseline)",
+                     limit = c(-10,10),
                      breaks = c(-10:10)) +
   theme_bw() +
   theme(panel.border = element_blank(), 
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(), 
-        axis.line = element_line(colour = "black"))
+        axis.line = element_line(colour = "black")) +
+  theme(axis.text.x=element_blank(),
+        axis.ticks.x=element_blank()) +
+  scale_x_discrete(name = "Pain Scores")
 
 
 #############################################################
@@ -442,37 +457,49 @@ TE %>% ggplot(aes(x = gshist, y = ..count.., fill = POSPAIN)) +
 ##################################### CORRELATIONS
 
 
+
+
+
+####significant correlations
+
 TE <- read_excel('C:\\Users\\jacqu\\Documents\\minnesota\\stats\\Porth Phase 1 Results 2020-deidentified.xlsx', sheet = 'tennisElbow') #load excel sheet into R
 
 # Baseline
 
+fit <- 0.293
+rsq_label <- paste('R^2 == ', fit)
+
 TE %>% ggplot(aes(UEFI_Score0, GripStrength0)) +
   geom_point(shape = 21) +
   geom_smooth(method=lm, se = FALSE, color = "black") +
-  scale_x_continuous(name = "UEFI Scores") +
-  scale_y_continuous(name = "Grip Strength Scores (lbs)") +
+  scale_x_continuous(name = "Baseline UEFI Scores") +
+  scale_y_continuous(name = "Baseline Grip Strength Scores (lbs)") +
   theme_bw() + 
   theme(panel.border = element_blank(), 
     panel.grid.major = element_blank(),
     panel.grid.minor = element_blank(), 
     axis.line = element_line(colour = "black")) + 
-  annotate(geom="text",x=75,y=75,label=" r^2 = 0.293")
+  annotate(geom="text",x=70,y=80,label= rsq_label, hjust = 0, vjust = 1, parse = TRUE)
 
 
 # Week 10 
+
+fit <- 0.471
+rsq_label <- paste('R^2 == ', fit)
+
 TE %>% ggplot(aes(Pain10, UEFI_Score10)) +
   geom_point(shape = 21) +
   geom_smooth(method=lm, se = FALSE, color = "black") +
-  scale_x_discrete(name = "Pain Scores",
+  scale_x_discrete(name = "Week 10 Pain Scores",
                    breaks = c(0:10),
                    limit = c(0:10)) +
-  scale_y_continuous(name = "UEFI Scores") +
+  scale_y_continuous(name = "Week 10 UEFI Scores") +
   theme_bw() + 
   theme(panel.border = element_blank(), 
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(), 
         axis.line = element_line(colour = "black")) + 
-  annotate(geom="text",x=7.5,y=70,label=" r^2 = 0.471")
+  annotate(geom="text",x=9,y=58,label= rsq_label, hjust = 0, vjust = 1, parse = TRUE)
 
 
 
