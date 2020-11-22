@@ -130,7 +130,6 @@ TE %>% ggplot(aes(x = variable, y = Score)) +
   theme(legend.title=element_blank()) + #removes legend titles
   annotate(geom="text",x=2.5,y=10,label="B")
 
-
 # UEFI Scores
 
 TE <- read_excel('C:\\Users\\jacqu\\Documents\\minnesota\\stats\\Porth Phase 1 Results 2020-deidentified.xlsx', sheet = 'UEFI') 
@@ -372,7 +371,6 @@ UEFI_norm %>% ggplot() +
   
 shapiro.test(UEFI_norm$Score) # Shapiro test for normality 
   
-  
 # Pain Scores
 
 Pain_norm <- read_excel('C:\\Users\\jacqu\\Documents\\minnesota\\stats\\Porth Phase 1 Results 2020-deidentified.xlsx', sheet = 'Pain_diff') #load excel sheet into R
@@ -473,12 +471,12 @@ TE <- read_excel('C:\\Users\\jacqu\\Documents\\minnesota\\stats\\Porth Phase 1 R
 library("gridExtra")
 library("cowplot")
 
-a <- TE %>% ggplot(aes(GripStrength0, UEFI_Score0)) +
+a <- TE %>% ggplot(aes(UEFI_Score0, GripStrength0)) +
   geom_point(size = 3) + #changes the size of the dots
-  scale_x_continuous(name = "Baseline Grip Strength Scores (lbs)", #names x-axis
+  scale_y_continuous(name = "Baseline Grip Strength Scores (lbs)", #names x-axis
                      limit = c(1,160),
                      breaks = c(0, 40, 80, 120, 160)) + 
-  scale_y_continuous(name = "Baseline UEFI Scores",
+  scale_x_continuous(name = "Baseline UEFI Scores",
                      limit = c(1,80),
                      breaks = c(0, 20, 40, 60, 80)) +
   theme_bw() +
@@ -486,7 +484,7 @@ a <- TE %>% ggplot(aes(GripStrength0, UEFI_Score0)) +
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(), 
         axis.line = element_line(colour = "black"))+ 
-  annotate(geom="text",x=1,y=75,label="A")
+  annotate(geom="text",x=1,y=1,label="A")
   
 b <- TE %>% ggplot(aes(GripStrength0, Pain0)) +
   geom_point(size = 3) +
@@ -501,14 +499,14 @@ b <- TE %>% ggplot(aes(GripStrength0, Pain0)) +
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(), 
         axis.line = element_line(colour = "black"))+ 
-  annotate(geom="text",x=1,y=10,label="B")
+  annotate(geom="text",x=1,y=1,label="B")
 
-c <- TE %>% ggplot(aes(UEFI_Score0, Pain0)) +
+c <- TE %>% ggplot(aes(Pain0, UEFI_Score0)) +
   geom_point(size = 3) +
-  scale_x_continuous(name = "Baseline UEFI Scores",
+  scale_y_continuous(name = "Baseline UEFI Scores",
                      limit = c(1,80),
                      breaks = c(0, 20, 40, 60, 80)) + 
-  scale_y_continuous(name = "Baseline Pain Scores",
+  scale_x_continuous(name = "Baseline Pain Scores",
                      limit = c(1,10),
                      breaks = c(0:10)) +
   theme_bw() +
@@ -516,14 +514,14 @@ c <- TE %>% ggplot(aes(UEFI_Score0, Pain0)) +
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(), 
         axis.line = element_line(colour = "black")) + 
-  annotate(geom="text",x=1,y=10,label="C")
+  annotate(geom="text",x=1,y=1,label="C")
 
-d <- TE %>% ggplot(aes(GripStrength10, UEFI_Score10)) +
+d <- TE %>% ggplot(aes(UEFI_Score10, GripStrength10)) +
   geom_point(size = 3) +
-  scale_x_continuous(name = "Week 10 Grip Strength Scores (lbs)",
+  scale_y_continuous(name = "Week 10 Grip Strength Scores (lbs)",
                      limit = c(1,160),
                      breaks = c(0, 40, 80, 120, 160)) + 
-  scale_y_continuous(name = "Week 10 UEFI Scores",
+  scale_x_continuous(name = "Week 10 UEFI Scores",
                      limit = c(1,80),
                      breaks = c(0, 20, 40, 60, 80)) +
   theme_bw() +
@@ -531,7 +529,7 @@ d <- TE %>% ggplot(aes(GripStrength10, UEFI_Score10)) +
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(), 
         axis.line = element_line(colour = "black")) + 
-  annotate(geom="text",x=1,y=80,label="D")
+  annotate(geom="text",x=1,y=1,label="D")
 
 e <- TE %>% ggplot(aes(GripStrength10, Pain10)) +
   geom_point(size = 3) +
@@ -546,14 +544,14 @@ e <- TE %>% ggplot(aes(GripStrength10, Pain10)) +
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(), 
         axis.line = element_line(colour = "black")) + 
-  annotate(geom="text",x=1,y=10,label="E")
+  annotate(geom="text",x=1,y=1,label="E")
   
-f <- TE %>% ggplot(aes(UEFI_Score10, Pain10)) +
+f <- TE %>% ggplot(aes(Pain10, UEFI_Score10)) +
   geom_point(size = 3) +
-  scale_x_continuous(name = "Week 10 UEFI Scores",
+  scale_y_continuous(name = "Week 10 UEFI Scores",
                      limit = c(1,80),
                      breaks = c(0, 20, 40, 60, 80)) + 
-  scale_y_continuous(name = "Week 10 Pain Scores",
+  scale_x_continuous(name = "Week 10 Pain Scores",
                      limit = c(1,10),
                      breaks = c(0:10)) +
   theme_bw() +
@@ -561,7 +559,7 @@ f <- TE %>% ggplot(aes(UEFI_Score10, Pain10)) +
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(), 
         axis.line = element_line(colour = "black")) + 
-  annotate(geom="text",x=1,y=10,label="F")
+  annotate(geom="text",x=1,y=1,label="F")
 
 plot_grid(a, b, c, d, e, f, ncol = 3, nrow = 2) #plots all graphs in the same figure
 
@@ -587,7 +585,6 @@ TE %>% ggplot(aes(UEFI_Score0, GripStrength0)) +
     panel.grid.minor = element_blank(), 
     axis.line = element_line(colour = "black")) + 
   annotate(geom="text",x=70,y=80,label= rsq_label, hjust = 0, vjust = 1, parse = TRUE)
-
 
 # Week 10 
 
